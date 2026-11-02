@@ -3,4 +3,4 @@
 apkEditorPro/release/
 build/
 gradle/
-.gradle/
+.gradle/local.properties
