@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_translate">תרגום</string>
+    <string name="search">חיפוש</string>
+    <string name="saving">שומר…</string>
+    <string name="pickSo">נא לבחור קובץ ‎.so</string>
+    <string name="noFile">לא נמצא מנהל קבצים.</string>
+    <string name="ok">אישור</string>
+    <string name="no">לא</string>
+    <string name="cancel">ביטול</string>
+    <string name="not_found">לא נמצא!</string>
+    <string name="error">שגיאה</string>
+    <string name="success">הצלחה</string>
+    <string name="failure">כישלון</string>
+    <string name="parsing">מפענח…</string>
+    <string name="ensure_save">בטוח שברצונך לשמור?</string>
+    <string name="out_of_memory">גלישת זיכרון!</string>
+    <string name="copied">הועתק</string>
+    <string name="err_rename">שגיאה בשינוי שם הקובץ: %s</string>
+    <string name="copy">העתקת טקסט</string>
+    <string name="b64">פענוח base64</string>
+    <string name="save">שמירה</string>
+    <string name="opened">הקובץ נפתח</string>
+    <string name="go_to">מעבר לשורה</string>
+    <string name="new_value"></string>
+</resources>

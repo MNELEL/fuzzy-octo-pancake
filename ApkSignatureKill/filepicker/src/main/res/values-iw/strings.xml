@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cancel_button_label">ביטול</string>
+    <string name="choose_button_label">בחירה</string>
+    <string name="label_parent_directory">תיקיית אב</string>
+    <string name="last_edit">נערך לאחרונה: </string>
+    <string name="error_dir_access">לא ניתן לגשת לתיקייה</string>
+</resources>

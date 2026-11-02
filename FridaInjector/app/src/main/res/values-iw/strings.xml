@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Frida Injector - Pocket Edition</string>
+    <string name="pref_appearance">מראה</string>
+    <string name="pref_fullscreen_mode">מצב מסך מלא</string>
+    <string name="pref_night_mode">מצב לילה</string>
+    <string name="pref_editor">עורך</string>
+    <string name="pref_wordwrap">גלישת שורה</string>
+    <string name="pref_community">קהילה</string>
+    <string name="menu_jump_to_line">מעבר לשורה</string>
+    <string name="menu_settings">הגדרות</string>
+    <string name="menu_about">אודות</string>
+    <string name="menu_undo">ביטול</string>
+    <string name="menu_redo">ביצוע חוזר</string>
+    <string name="package_name">שם חבילה</string>
+    <string name="open_apk">פתיחה</string>
+    <string name="script_path">נתיב הסקריפט</string>
+    <string name="open_script">פתיחה</string>
+    <string name="run">הרצה</string>
+    <string name="your_code">// הקוד שלך</string>
+    <string name="enter_number_line">יש להזין מספר שורה</string>
+    <string name="jump_to_line">מעבר לשורה</string>
+    <string name="dialog_about_title">אודות</string>
+    <string name="select_script">בחירת סקריפט</string>
+    <string name="select">בחירה</string>
+</resources>

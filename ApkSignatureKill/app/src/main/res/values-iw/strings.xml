@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SignatureKill</string>
+    <string name="settings_title">הגדרות</string>
+    <string name="scoped_storage_title">שינויים באנדרואיד 11 (R)</string>
+    <string name="scoped_storage_msg">אנדרואיד 11 הציגה דרך חדשה לניהול קבצים בשם \"Scoped Storage\". יש להעניק הרשאה מיוחדת!</string>
+    <string name="about">\n\nApkSignatureKill 4.0\n\nאפליקציה להסרת בדיקת גיבוב החתימה ובדיקת קובצי ה-dex.\n\nHeavenly Hook משמש כברירת מחדל. עוקף את בדיקת שלמות החתימה וה-dex.\n\nBin Hook עוקף את בדיקת שלמות החתימה.\n\nSuper Hook עוקף את בדיקת שלמות האפליקציה כולה.\n\nהאפליקציה נמצאת בפיתוח פעיל ועלולה להכיל שגיאות. אין הבטחה לתקינות ה-Hook-ים, הם אינם פיתוח שלי.\n\n</string>
+</resources>

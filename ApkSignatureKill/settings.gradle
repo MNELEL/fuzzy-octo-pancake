@@ -1,0 +1,5 @@
+include ':app',
+        ':filepicker',
+        ':dx',
+        ':apksigner'
+rootProject.name = "SignatureKill"

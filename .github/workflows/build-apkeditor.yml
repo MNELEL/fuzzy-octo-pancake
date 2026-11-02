@@ -1,0 +1,30 @@
+name: Build ApkEditorPro (Hebrew)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths: ['ApkEditorPro/**', '.github/workflows/build-apkeditor.yml']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ApkEditorPro
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17' }
+      - uses: gradle/actions/setup-gradle@v4
+        with: { gradle-version: '7.6.4' }
+      - name: Build release APK (apkEditorPro module)
+        run: gradle :apkEditorPro:assembleRelease --stacktrace
+      - name: Align and sign
+        env: { KS_PASS: apkeditorm5s }
+        run: |
+          BT="$ANDROID_HOME/build-tools"; VER=$(ls "$BT" | sort -V | tail -1)
+          APK=$(find apkEditorPro/build/outputs/apk/release -name "*.apk" | head -1)
+          "$BT/$VER/zipalign" -p 4 "$APK" app-aligned.apk
+          "$BT/$VER/apksigner" sign --ks apkeditor-m5s.jks --ks-pass pass:$KS_PASS --out ApkEditorPro-he.apk app-aligned.apk
+          "$BT/$VER/apksigner" verify ApkEditorPro-he.apk
+      - uses: actions/upload-artifact@v4
+        with: { name: ApkEditorPro-he, path: ApkEditorPro/ApkEditorPro-he.apk }

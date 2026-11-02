@@ -1,0 +1,30 @@
+name: Build Disassembler (Hebrew)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths: ['Disassembler/**', '.github/workflows/build-disassembler.yml']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Disassembler
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17' }
+      - uses: gradle/actions/setup-gradle@v4
+        with: { gradle-version: '8.4' }
+      - name: Build release APK
+        run: gradle :app:assembleRelease --stacktrace
+      - name: Align and sign
+        env: { KS_PASS: disasmm5s123 }
+        run: |
+          BT="$ANDROID_HOME/build-tools"; VER=$(ls "$BT" | sort -V | tail -1)
+          APK=$(find app/build/outputs/apk/release -name "*.apk" | head -1)
+          "$BT/$VER/zipalign" -p 4 "$APK" app-aligned.apk
+          "$BT/$VER/apksigner" sign --ks disasm-m5s.jks --ks-pass pass:$KS_PASS --out Disassembler-he.apk app-aligned.apk
+          "$BT/$VER/apksigner" verify Disassembler-he.apk
+      - uses: actions/upload-artifact@v4
+        with: { name: Disassembler-he, path: Disassembler/Disassembler-he.apk }

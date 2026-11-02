@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Disassembler</string>
+    <string name="done">סיום</string>
+    <string name="search">חיפוש</string>
+    <string name="loading">טוען…</string>
+    <string name="saving">שומר…</string>
+    <string name="pickSo">נא לבחור קובץ ‎.so</string>
+    <string name="noFile">לא נמצא מנהל קבצים.</string>
+    <string name="argumentsName">ארגומנטים:</string>
+    <string name="className">מחלקה:</string>
+    <string name="typeName">סוג:</string>
+    <string name="mainName">שם:</string>
+    <string name="nameDemangler">פענוח שמות</string>
+    <string name="usePattern">שימוש בתבנית</string>
+    <string name="againToExit">יש ללחוץ שוב כדי לצאת.</string>
+    <string name="symbolsActivity">סמלים</string>
+    <string name="searchActivity">חיפוש</string>
+    <string name="symbolActivity">סמל</string>
+    <string name="classActivity">מחלקה</string>
+    <string name="vtableActivity">vtable עבור </string>
+    <string name="symbols_menu">תפריט סמלים</string>
+    <string name="paste_text_here">יש להדביק טקסט כאן</string>
+    <string name="app_search">חיפוש סמלים</string>
+    <string name="app_symbol">סמל</string>
+    <string name="app_symbols">סמלים</string>
+    <string name="app_vtable">VTable</string>
+    <string name="result_demangle">תוצאה</string>
+    <string name="paste_symbol">הדבקת סמל</string>
+    <string name="symbols_count">"מספר סמלים: "</string>
+    <string name="enter_search_symbol">יש להזין סמל לחיפוש…</string>
+    <string name="symbols_not_found">לא נמצאו סמלים</string>
+    <string name="save">שמירה</string>
+    <string name="vtable">VTable</string>
+    <string name="convert">המרה</string>
+    <string name="please_open_file">יש לפתוח קובץ</string>
+    <string name="open">פתיחה</string>
+    <string name="classes">מחלקות</string>
+    <string name="dump">הדפסה</string>
+    <string name="menu">תפריט</string>
+    <string name="symbols">סמלים</string>
+    <string name="github">GitHub</string>
+    <string name="telegram">טלגרם</string>
+    <string name="night_mode">מצב לילה</string>
+</resources>
