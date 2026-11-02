@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Frida Injector - Pocket Edition</string>
+    <string name="app_name">מזריק פרידה - גרסה ניידת</string>
     <string name="pref_appearance">מראה</string>
     <string name="pref_fullscreen_mode">מצב מסך מלא</string>
     <string name="pref_night_mode">מצב לילה</string>

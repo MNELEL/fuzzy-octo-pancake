@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SignatureKill</string>
+    <string name="app_name">מבטל חתימות</string>
     <string name="settings_title">הגדרות</string>
     <string name="scoped_storage_title">שינויים באנדרואיד 11 (R)</string>
     <string name="scoped_storage_msg">אנדרואיד 11 הציגה דרך חדשה לניהול קבצים בשם \"Scoped Storage\". יש להעניק הרשאה מיוחדת!</string>
