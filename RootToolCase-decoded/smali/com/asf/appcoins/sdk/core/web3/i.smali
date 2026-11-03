@@ -1,0 +1,44 @@
+.class public final synthetic Lcom/asf/appcoins/sdk/core/web3/i;
+.super Ljava/lang/Object;
+.source "lambda"
+
+# interfaces
+.implements Lc/b/n/d;
+
+
+# instance fields
+.field private final synthetic a:Lcom/asf/appcoins/sdk/core/web3/AsfWeb3jImpl;
+
+.field private final synthetic b:Ljava/lang/String;
+
+
+# direct methods
+.method public synthetic constructor <init>(Lcom/asf/appcoins/sdk/core/web3/AsfWeb3jImpl;Ljava/lang/String;)V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, Lcom/asf/appcoins/sdk/core/web3/i;->a:Lcom/asf/appcoins/sdk/core/web3/AsfWeb3jImpl;
+
+    iput-object p2, p0, Lcom/asf/appcoins/sdk/core/web3/i;->b:Ljava/lang/String;
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final apply(Ljava/lang/Object;)Ljava/lang/Object;
+    .locals 2
+
+    iget-object v0, p0, Lcom/asf/appcoins/sdk/core/web3/i;->a:Lcom/asf/appcoins/sdk/core/web3/AsfWeb3jImpl;
+
+    iget-object v1, p0, Lcom/asf/appcoins/sdk/core/web3/i;->b:Ljava/lang/String;
+
+    check-cast p1, Lorg/web3j/protocol/core/methods/response/EthGetTransactionReceipt;
+
+    invoke-virtual {v0, v1, p1}, Lcom/asf/appcoins/sdk/core/web3/AsfWeb3jImpl;->a(Ljava/lang/String;Lorg/web3j/protocol/core/methods/response/EthGetTransactionReceipt;)Lc/b/h;
+
+    move-result-object p1
+
+    return-object p1
+.end method

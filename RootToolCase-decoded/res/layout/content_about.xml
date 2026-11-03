@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/content_about" android:paddingLeft="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin" android:paddingRight="@dimen/activity_horizontal_margin" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginBottom="34.0dip" app:layout_behavior="@string/appbar_scrolling_view_behavior"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <ImageView android:id="@id/imgAbout" android:paddingTop="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/ic_app" />
+            <TextView android:id="@id/txt_icon" android:paddingTop="5.0dip" android:paddingBottom="@dimen/paddingbottom_about" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Click me!" android:textAlignment="center" />
+            <TextView android:textSize="@dimen/textsize_about_title" android:textStyle="bold" android:id="@id/txt_version" android:paddingTop="@dimen/paddingtop_about" android:paddingBottom="@dimen/paddingbottom_about" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="MIUI Center Clock " android:textAlignment="center" />
+            <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="cpu82" android:textAlignment="center" />
+            <TextView android:textSize="@dimen/textsize_about_title" android:textStyle="bold" android:paddingTop="@dimen/paddingtop_about" android:paddingBottom="@dimen/paddingbottom_about" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/title_betatest" android:textAlignment="center" />
+            <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Alex" android:textAlignment="center" />
+            <TextView android:paddingTop="5.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="indigo79" android:textAlignment="center" />
+            <TextView android:textSize="@dimen/textsize_about_title" android:textStyle="bold" android:paddingTop="@dimen/paddingtop_about" android:paddingBottom="@dimen/paddingbottom_about" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="libsuperuser" android:textAlignment="center" />
+            <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="chainfire" android:textAlignment="center" />
+            <TextView android:textSize="@dimen/textsize_about_title" android:textStyle="bold" android:id="@id/txt_translators_title" android:paddingTop="@dimen/paddingtop_about" android:paddingBottom="@dimen/paddingbottom_about" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/title_translation" android:textAlignment="center" />
+            <TextView android:id="@id/txt_translators" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/translators" android:textAlignment="center" />
+            <TextView android:textSize="@dimen/textsize_about_title" android:textStyle="bold" android:paddingTop="@dimen/paddingtop_about" android:paddingBottom="@dimen/paddingbottom_about" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Support" android:textAlignment="center" />
+            <TextView android:id="@id/support" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Support" android:textAlignment="center" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

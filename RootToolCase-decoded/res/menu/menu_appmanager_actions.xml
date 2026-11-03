@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:icon="@drawable/ic_info_outline_black_24dp" android:id="@id/action_details" android:orderInCategory="100" android:title="@string/action_details" />
+    <item android:icon="@drawable/outline_delete_forever_black_24" android:id="@id/action_uninstall" android:orderInCategory="100" android:title="@string/action_uninstall" />
+    <item android:icon="@drawable/baseline_block_black_24" android:id="@id/action_freeze" android:orderInCategory="100" android:title="@string/action_freeze" />
+    <item android:icon="@drawable/outline_check_box_black_24" android:id="@id/action_unfreeze" android:orderInCategory="100" android:title="@string/action_unfreeze" />
+    <item android:icon="@drawable/outline_delete_sweep_black_24" android:id="@id/action_clear_cache" android:orderInCategory="100" android:title="@string/action_clear_cache" />
+    <item android:icon="@drawable/baseline_delete_sweep_black_24" android:id="@id/action_clear_data" android:orderInCategory="100" android:title="@string/action_clear_data" />
+    <item android:icon="@drawable/outline_get_app_black_24" android:id="@id/action_extract" android:orderInCategory="100" android:title="@string/action_extract" />
+    <item android:icon="@drawable/baseline_list_black_24" android:id="@id/action_customlist" android:orderInCategory="100" android:title="@string/action_customlist" />
+    <item android:icon="@drawable/outline_report_problem_black_24" android:id="@id/action_bloatware" android:orderInCategory="100" android:title="@string/action_bloatware" />
+    <item android:icon="@drawable/baseline_select_all_black_24" android:id="@id/action_multiselect" android:orderInCategory="100" android:title="@string/action_multiselect" />
+</menu>

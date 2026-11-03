@@ -1,0 +1,54 @@
+.class final Lcom/google/android/gms/internal/ads/zh0;
+.super Ljava/lang/Object;
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# instance fields
+.field private final synthetic a:Lcom/google/android/gms/internal/ads/ai0;
+
+.field private final synthetic b:Lcom/google/android/gms/internal/ads/bi0;
+
+
+# direct methods
+.method constructor <init>(Lcom/google/android/gms/internal/ads/ah0;Lcom/google/android/gms/internal/ads/ai0;Lcom/google/android/gms/internal/ads/bi0;)V
+    .locals 0
+
+    .line 1
+    iput-object p2, p0, Lcom/google/android/gms/internal/ads/zh0;->a:Lcom/google/android/gms/internal/ads/ai0;
+
+    iput-object p3, p0, Lcom/google/android/gms/internal/ads/zh0;->b:Lcom/google/android/gms/internal/ads/bi0;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final run()V
+    .locals 2
+
+    .line 1
+    :try_start_0
+    iget-object v0, p0, Lcom/google/android/gms/internal/ads/zh0;->a:Lcom/google/android/gms/internal/ads/ai0;
+
+    iget-object v1, p0, Lcom/google/android/gms/internal/ads/zh0;->b:Lcom/google/android/gms/internal/ads/bi0;
+
+    invoke-interface {v0, v1}, Lcom/google/android/gms/internal/ads/ai0;->a(Lcom/google/android/gms/internal/ads/bi0;)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    return-void
+
+    :catch_0
+    move-exception v0
+
+    const-string v1, "Could not propagate interstitial ad event."
+
+    .line 2
+    invoke-static {v1, v0}, Lcom/google/android/gms/internal/ads/ud;->c(Ljava/lang/String;Ljava/lang/Throwable;)V
+
+    return-void
+.end method

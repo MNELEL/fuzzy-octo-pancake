@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="apps_clear_cache">
+        <item quantity="other">You are about to clear cache of %d apps</item>
+        <item quantity="one">You are about to clear the cache of %d app</item>
+    </plurals>
+    <plurals name="apps_clear_data">
+        <item quantity="other">You are about to clear the data of %d apps</item>
+        <item quantity="one">You are about to clear the data of %d app</item>
+    </plurals>
+    <plurals name="apps_disable">
+        <item quantity="other">You are about to disable %d apps</item>
+        <item quantity="one">You are about to disable %d app</item>
+    </plurals>
+    <plurals name="apps_enable">
+        <item quantity="other">You are about to enable %d apps?</item>
+        <item quantity="one">You are about to enable %d app</item>
+    </plurals>
+    <plurals name="apps_selected">
+        <item quantity="other">%d apps selected</item>
+        <item quantity="one">%d app selected</item>
+    </plurals>
+    <plurals name="apps_uninstall">
+        <item quantity="other">You are about to uninstall %d apps</item>
+        <item quantity="one">You are about to uninstall %d app</item>
+    </plurals>
+</resources>

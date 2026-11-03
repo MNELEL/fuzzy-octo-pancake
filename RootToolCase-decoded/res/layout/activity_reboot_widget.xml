@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/activity_reboot_widget" android:paddingLeft="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin" android:paddingRight="@dimen/activity_horizontal_margin" android:paddingBottom="@dimen/activity_vertical_margin" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.CardView android:visibility="visible" android:layout_width="fill_parent" android:layout_height="wrap_content" app:cardBackgroundColor="@color/colorTranslucentBlack" app:cardCornerRadius="@dimen/title_cornerradius" app:cardElevation="4.0dip" app:cardUseCompatPadding="true" app:contentPadding="12.0dip">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <android.support.v7.widget.CardView android:id="@id/card_reboot" android:visibility="visible" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:foreground="?android:selectableItemBackground" app:cardCornerRadius="@dimen/title_cornerradius" app:cardElevation="4.0dip" app:cardUseCompatPadding="true" app:contentPadding="12.0dip">
+                <RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <ImageView android:id="@id/reboot_icon" android:layout_width="@dimen/title_iconsize_small" android:layout_height="@dimen/title_iconsize_small" android:layout_marginRight="16.0dip" android:src="@drawable/reboot_white" android:layout_alignParentLeft="true" android:layout_centerVertical="true" />
+                    <TextView android:textSize="20.0sp" android:id="@id/reboot_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/reboot_title" android:layout_toRightOf="@id/reboot_icon" style="@style/Base.TextAppearance.AppCompat.Headline" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView android:id="@id/card_soft_reboot" android:visibility="visible" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:foreground="?android:selectableItemBackground" app:cardCornerRadius="@dimen/title_cornerradius" app:cardElevation="4.0dip" app:cardUseCompatPadding="true" app:contentPadding="12.0dip">
+                <RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <ImageView android:id="@id/reboot_soft_icon" android:layout_width="@dimen/title_iconsize_small" android:layout_height="@dimen/title_iconsize_small" android:layout_marginRight="16.0dip" android:src="@drawable/reboot_white" android:layout_alignParentLeft="true" android:layout_centerVertical="true" />
+                    <TextView android:textSize="20.0sp" android:id="@id/reboot_soft_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/reboot_soft_title" android:layout_toRightOf="@id/reboot_soft_icon" style="@style/Base.TextAppearance.AppCompat.Headline" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView android:id="@id/card_recovery" android:visibility="visible" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:foreground="?android:selectableItemBackground" app:cardCornerRadius="@dimen/title_cornerradius" app:cardElevation="4.0dip" app:cardUseCompatPadding="true" app:contentPadding="12.0dip">
+                <RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <ImageView android:id="@id/reboot_recovery_icon" android:layout_width="@dimen/title_iconsize_small" android:layout_height="@dimen/title_iconsize_small" android:layout_marginRight="16.0dip" android:src="@drawable/reboot_recovery_big" android:layout_alignParentLeft="true" android:layout_centerVertical="true" />
+                    <TextView android:textSize="20.0sp" android:id="@id/reboot_recovery_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/reboot_recovery_title" android:layout_toRightOf="@id/reboot_recovery_icon" style="@style/Base.TextAppearance.AppCompat.Headline" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView android:id="@id/card_fastboot" android:visibility="visible" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:foreground="?android:selectableItemBackground" app:cardCornerRadius="@dimen/title_cornerradius" app:cardElevation="4.0dip" app:cardUseCompatPadding="true" app:contentPadding="12.0dip">
+                <RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <ImageView android:id="@id/reboot_fastboot_icon" android:layout_width="@dimen/title_iconsize_small" android:layout_height="@dimen/title_iconsize_small" android:layout_marginRight="16.0dip" android:src="@drawable/reboot_recovery_big" android:layout_alignParentLeft="true" android:layout_centerVertical="true" />
+                    <TextView android:textSize="20.0sp" android:id="@id/reboot_fastboot_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/reboot_fastboot_title" android:layout_toRightOf="@id/reboot_fastboot_icon" style="@style/Base.TextAppearance.AppCompat.Headline" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView android:id="@id/card_poweroff" android:visibility="visible" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:foreground="?android:selectableItemBackground" app:cardCornerRadius="@dimen/title_cornerradius" app:cardElevation="4.0dip" app:cardUseCompatPadding="true" app:contentPadding="12.0dip">
+                <RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <ImageView android:id="@id/reboot_poweroff_icon" android:layout_width="@dimen/title_iconsize_small" android:layout_height="@dimen/title_iconsize_small" android:layout_marginRight="16.0dip" android:src="@drawable/ic_power_settings_new_black_48dp" android:layout_alignParentLeft="true" android:layout_centerVertical="true" />
+                    <TextView android:textSize="20.0sp" android:id="@id/reboot_poweroff_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/reboot_poweroff_title" android:layout_toRightOf="@id/reboot_poweroff_icon" style="@style/Base.TextAppearance.AppCompat.Headline" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

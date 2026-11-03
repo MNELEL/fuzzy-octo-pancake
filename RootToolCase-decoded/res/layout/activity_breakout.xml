@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/main_view" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:ads="http://schemas.android.com/apk/res-auto">
+    <com.cpu82.roottoolcase.BreakoutView android:id="@id/surface_view" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <com.google.android.gms.ads.AdView android:id="@id/adView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" ads:adSize="SMART_BANNER" ads:adUnitId="ca-app-pub-8697568955095120/6880796498" />
+    <TextView android:textSize="16.0sp" android:textColor="@color/colorWhite" android:gravity="center" android:id="@id/txtAdDisabled" android:background="@color/colorPrimaryDark" android:padding="5.0dip" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="50.0dip" android:text="@string/ad_failed" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" android:textAlignment="center" />
+</RelativeLayout>

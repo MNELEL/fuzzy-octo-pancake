@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="apps_clear_cache">
+        <item quantity="other">Chystáte se vymazat mezipaměť %d aplikací</item>
+        <item quantity="one">Chystáte se vymazat mezipaměť %d aplikace</item>
+    </plurals>
+    <plurals name="apps_clear_data">
+        <item quantity="other">Chystáte se vymazat data %d aplikací</item>
+        <item quantity="one">Chystáte se vymazat data %d aplikace</item>
+    </plurals>
+    <plurals name="apps_disable">
+        <item quantity="other">Počet aplikací k aktivaci: %d</item>
+        <item quantity="one">Chystáte se deaktivovat %d aplikaci</item>
+    </plurals>
+    <plurals name="apps_enable">
+        <item quantity="other">Počet aplikací k aktivaci: %d</item>
+        <item quantity="one">Chystáte se aktivovat %d aplikaci</item>
+    </plurals>
+    <plurals name="apps_selected">
+        <item quantity="other">Počet vybraných aplikací: %d</item>
+        <item quantity="one">%d vybraná aplikace</item>
+    </plurals>
+    <plurals name="apps_uninstall">
+        <item quantity="other">Počet aplikací k odinstalování: %d</item>
+        <item quantity="one">Chystáte se odinstalovat %d aplikaci</item>
+    </plurals>
+</resources>

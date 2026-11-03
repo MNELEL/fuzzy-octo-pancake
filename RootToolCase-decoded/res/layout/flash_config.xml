@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:paddingLeft="20.0dip" android:paddingTop="20.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView android:textStyle="bold" android:padding="5.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cfg_backup_title" />
+    <CheckBox android:id="@id/cbBackup" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:text="@string/cfg_backup" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:buttonTint="@color/colorAccent" />
+    <TextView android:textStyle="bold" android:padding="5.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="WIPE" />
+    <CheckBox android:id="@id/cbCache" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:text="Cache" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:buttonTint="@color/colorAccent" />
+    <CheckBox android:id="@id/cbDalvik" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:text="Dalvik/ART Cache" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:buttonTint="@color/colorAccent" />
+    <CheckBox android:id="@id/cbData" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Data" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:buttonTint="@android:color/holo_red_dark" />
+</LinearLayout>

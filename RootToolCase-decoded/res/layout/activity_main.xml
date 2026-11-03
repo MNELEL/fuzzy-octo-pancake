@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/main_view" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:ads="http://schemas.android.com/apk/res-auto">
+    <android.support.design.widget.CoordinatorLayout android:id="@id/main_layout" android:fitsSystemWindows="true" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <android.support.design.widget.AppBarLayout android:theme="@style/AppTheme.AppBarOverlay" android:id="@id/app_bar" android:fitsSystemWindows="true" android:layout_width="fill_parent" android:layout_height="@dimen/app_bar_height">
+            <android.support.design.widget.CollapsingToolbarLayout android:id="@id/toolbar_layout" android:fitsSystemWindows="true" android:layout_width="fill_parent" android:layout_height="fill_parent" ads:contentScrim="?colorPrimary" ads:layout_scrollFlags="exitUntilCollapsed|scroll">
+                <ImageView android:id="@id/place_image" android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/feature_graphic2" android:scaleType="centerCrop" android:adjustViewBounds="true" ads:layout_collapseMode="parallax" ads:layout_collapseParallaxMultiplier="0.7" />
+                <android.support.v7.widget.Toolbar android:id="@id/toolbar" android:layout_width="fill_parent" android:layout_height="?actionBarSize" ads:layout_collapseMode="pin" ads:popupTheme="@style/AppTheme.PopupOverlay" />
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+        <include layout="@layout/content_main" />
+    </android.support.design.widget.CoordinatorLayout>
+    <TextView android:textSize="16.0sp" android:textColor="@color/colorWhite" android:gravity="center" android:id="@id/txtAdDisabled" android:background="@color/colorPrimaryDark" android:padding="5.0dip" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="50.0dip" android:text="@string/ad_failed" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" android:textAlignment="center" />
+</RelativeLayout>

@@ -1,0 +1,75 @@
+version: 2.9.3
+apkFileName: root-toolcase-1-16-4.apk
+isFrameworkApk: false
+usesFramework:
+  ids:
+  - 1
+  tag: null
+sdkInfo:
+  minSdkVersion: 24
+  targetSdkVersion: 28
+packageInfo:
+  forcedPackageId: 127
+  renameManifestPackage: null
+versionInfo:
+  versionCode: 92
+  versionName: 1.16.4
+resourcesAreCompressed: false
+sharedLibrary: false
+sparseResources: false
+unknownFiles:
+  androidsupportmultidexversion.txt: 8
+  en-mnemonic-word-list.txt: 8
+  firebase-ads.properties: 8
+  firebase-analytics-impl.properties: 8
+  firebase-analytics.properties: 8
+  firebase-common.properties: 8
+  firebase-core.properties: 8
+  firebase-iid-interop.properties: 8
+  firebase-iid.properties: 8
+  firebase-measurement-connector-impl.properties: 8
+  firebase-measurement-connector.properties: 8
+  firebase-messaging.properties: 8
+  play-services-ads-base.properties: 8
+  play-services-ads-identifier.properties: 8
+  play-services-ads-lite.properties: 8
+  play-services-ads.properties: 8
+  play-services-base.properties: 8
+  play-services-basement.properties: 8
+  play-services-drive.properties: 8
+  play-services-gass.properties: 8
+  play-services-gcm.properties: 8
+  play-services-iid.properties: 8
+  play-services-measurement-api.properties: 8
+  play-services-measurement-base.properties: 8
+  play-services-measurement-sdk-api.properties: 8
+  play-services-stats.properties: 8
+  play-services-tasks.properties: 8
+  version.properties: 8
+  fabric/com.crashlytics.sdk.android.answers.properties: 8
+  fabric/com.crashlytics.sdk.android.beta.properties: 8
+  fabric/com.crashlytics.sdk.android.crashlytics-core.properties: 8
+  fabric/com.crashlytics.sdk.android.crashlytics.properties: 8
+  fabric/io.fabric.sdk.android.fabric.properties: 8
+  jni/Darwin/libjffi-1.2.jnilib: 8
+  jni/i386-Windows/jffi-1.2.dll: 8
+  jni/ppc-AIX/libjffi-1.2.a: 8
+  jni/x86_64-Windows/jffi-1.2.dll: 8
+  okhttp3/internal/publicsuffix/publicsuffixes.gz: 8
+  org/spongycastle/x509/CertPathReviewerMessages.properties: 8
+  org/spongycastle/x509/CertPathReviewerMessages_de.properties: 8
+  solidity/build.sh: 8
+  solidity/readme.txt: 8
+  solidity/ens/AbstractENS.sol: 8
+  solidity/ens/ENS.sol: 8
+  solidity/ens/PublicResolver.sol: 8
+  solidity/ens/build/AbstractENS.abi: 8
+  solidity/ens/build/AbstractENS.bin: 8
+  solidity/ens/build/ENS.abi: 8
+  solidity/ens/build/ENS.bin: 8
+  solidity/ens/build/PublicResolver.abi: 8
+  solidity/ens/build/PublicResolver.bin: 8
+doNotCompress:
+- resources.arsc
+- ogg
+- png

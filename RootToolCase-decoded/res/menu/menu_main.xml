@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:icon="@drawable/ic_stars_black_24dp" android:id="@id/action_adfree" android:orderInCategory="100" android:title="@string/action_pro" app:iconTint="@color/colorIcon" app:showAsAction="never" />
+    <item android:icon="@drawable/ic_translate_black_24dp" android:id="@id/action_translate" android:visible="true" android:orderInCategory="100" android:title="@string/action_translate" app:iconTint="@color/colorIcon" app:showAsAction="never" />
+    <item android:icon="@drawable/ic_share_black_24dp" android:id="@id/action_share" android:visible="true" android:orderInCategory="100" android:title="@string/action_share" app:iconTint="@color/colorIcon" app:showAsAction="never" />
+    <item android:icon="@drawable/ic_star_black_24dp" android:id="@id/action_rate" android:visible="true" android:orderInCategory="100" android:title="@string/action_rate" app:iconTint="@color/colorIcon" app:showAsAction="never" />
+    <item android:icon="@drawable/ic_facebook_white_24dp" android:id="@id/action_facebook" android:visible="true" android:orderInCategory="100" android:title="@string/action_facebook" app:iconTint="@color/colorIcon" app:showAsAction="never" />
+    <item android:icon="@drawable/ic_twitter" android:id="@id/action_follow" android:visible="true" android:orderInCategory="100" android:title="@string/action_follow" app:iconTint="@color/colorIcon" app:showAsAction="never" />
+    <item android:icon="@drawable/ic_account_circle_black_24dp" android:id="@id/action_login" android:visible="true" android:orderInCategory="100" android:title="@string/action_account" app:iconTint="@color/colorIcon" app:showAsAction="never" />
+    <item android:icon="@drawable/ic_help_black_24dp" android:id="@id/action_wiki" android:visible="true" android:orderInCategory="100" android:title="@string/action_wiki" app:iconTint="@color/colorIcon" app:showAsAction="never" />
+    <item android:icon="@drawable/ic_info_outline_black_24dp" android:id="@id/action_about" android:visible="true" android:orderInCategory="100" android:title="@string/action_about" app:iconTint="@color/colorIcon" app:showAsAction="never" />
+    <item android:icon="@drawable/outline_toggle_off_black_24" android:id="@id/action_dark" android:orderInCategory="100" android:title="Dark Mode" app:iconTint="@color/colorIcon" app:showAsAction="never" />
+    <item android:icon="@drawable/outline_toggle_on_black_24" android:id="@id/action_light" android:visible="true" android:orderInCategory="100" android:title="Dark Mode" app:iconTint="@color/colorIcon" app:showAsAction="never" />
+</menu>

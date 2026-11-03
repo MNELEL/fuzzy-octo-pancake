@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:id="@id/group" android:checkableBehavior="single">
+        <item android:id="@id/menu_filter_all" android:checked="true" android:title="@string/action_filter_all" />
+        <item android:id="@id/menu_filter_system" android:title="@string/action_filter_system" />
+        <item android:id="@id/menu_filter_user" android:title="@string/action_filter_user" />
+        <item android:id="@id/menu_filter_updated" android:title="@string/action_filter_updated" />
+        <item android:id="@id/menu_filter_frozen" android:title="@string/action_filter_frozen" />
+        <item android:id="@id/menu_filter_custom" android:title="@string/action_filter_custom" />
+    </group>
+</menu>
