@@ -20,7 +20,8 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        
+        // mirrors old JCenter-only artifacts still used by this project, e.g. com.chrisplus.rootmanager
+        maven { url 'https://artifactory.appodeal.com/appodeal' }
     }
 }
 

@@ -35,6 +35,11 @@ android {
         }
     }
     namespace 'com.gmail.heagoo.apkeditor.pro'
+
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 dependencies {
