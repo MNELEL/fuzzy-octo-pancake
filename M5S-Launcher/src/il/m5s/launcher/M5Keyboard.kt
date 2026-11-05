@@ -1,5 +1,6 @@
 package il.m5s.launcher
 
+import android.content.Context
 import android.graphics.Color
 import android.inputmethodservice.InputMethodService
 import android.os.SystemClock
@@ -7,8 +8,10 @@ import android.text.InputType
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.FrameLayout
+import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
 import android.widget.TextView
 
 /**
@@ -43,16 +46,32 @@ class M5Keyboard : InputMethodService() {
 
     override fun onCreateInputView(): View {
         val tv = TextView(this).apply {
-            setPadding(24, 14, 24, 14)
+            setPadding(24, 14, 12, 14)
             textSize = 14f
             setTextColor(Color.WHITE)
-            setBackgroundColor(0xFF0F5360.toInt())
-            gravity = Gravity.CENTER
+            gravity = Gravity.CENTER_VERTICAL
         }
         statusView = tv
         updateStatus()
-        return FrameLayout(this).apply {
-            addView(tv, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT))
+        // A small tappable button, not just status text: on this half-touch screen the person
+        // can still tap here to open Android's own keyboard picker and switch to a touch
+        // keyboard (if one is installed) whenever they want one instead of the physical keypad
+        // -- without needing to leave the app they're typing in to dig through Settings.
+        val switchBtn = TextView(this).apply {
+            text = "⌨ מקלדת אחרת"
+            setPadding(20, 14, 20, 14)
+            textSize = 13f
+            setTextColor(Color.WHITE)
+            setBackgroundColor(0xFF14707F.toInt())
+            setOnClickListener {
+                try { (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showInputMethodPicker() } catch (t: Throwable) { }
+            }
+        }
+        return LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setBackgroundColor(0xFF0F5360.toInt())
+            addView(tv, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
+            addView(switchBtn, LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
         }
     }
 

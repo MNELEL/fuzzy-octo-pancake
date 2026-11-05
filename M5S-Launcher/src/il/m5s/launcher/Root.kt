@@ -201,6 +201,46 @@ object Root {
         return l
     }
 
+    /** Finds this device's real keypad keylayout file and overlays (via a systemless Magisk
+     *  module, same pattern as removeFromSystem -- never touches the real /system partition) a
+     *  patched copy where the physical CALL key and the physical * / # keys no longer report as
+     *  Android's special CALL/STAR/POUND codes. Those specific names make Android's own
+     *  framework intercept the key before any app ever sees it (CALL always jumps to the phone
+     *  app; on this ROM, STAR/POUND do too). They become F2/F3/F4 instead, which the launcher
+     *  (M5Keyboard and MainActivity) understands as STAR/POUND/CALL again for everything it does
+     *  -- but that interception by Android itself is what stops. The key above SEND, mapped to
+     *  HOME (also specially intercepted, which is why it never reached any app), becomes F1, a
+     *  free, assignable launcher shortcut. Reads the file fresh off the device and only edits
+     *  those five lines with sed, rather than writing a hardcoded replacement, so it adapts to
+     *  whatever this file actually contains instead of risking dropping something unrelated in
+     *  it. Needs a reboot to take effect, same as any Magisk module. */
+    fun fixKeylayout(): List<String> {
+        val l = ArrayList<String>()
+        val candidates = listOf("/system/usr/keylayout/mtk-kpd.kl", "/vendor/usr/keylayout/mtk-kpd.kl")
+        val src = candidates.firstOrNull { sh("test -f '" + it + "' && echo yes").out.contains("yes") }
+        if (src == null) { l.add("✗ קובץ מיפוי המקשים (mtk-kpd.kl) לא נמצא בנתיבים הצפויים"); return l }
+        val root = if (src.startsWith("/vendor/")) "vendor" else "system"
+        val modDir = "/data/adb/modules/m5s_keylayout_fix"
+        val targetDir = modDir + "/" + root + "/usr/keylayout"
+        l.add(line("יצירת תיקיית מודול Magisk", sh("mkdir -p '" + targetDir + "'")))
+        l.add(line("כתיבת module.prop", sh(
+            "printf 'id=m5s_keylayout_fix\nname=M5S Keylayout Fix\nversion=v1\nversionCode=1\nauthor=m5s-launcher\n" +
+            "description=Remaps CALL/STAR/POUND/HOME to neutral keycodes so the launcher decides what they do, instead of Android jumping to the dialer\n' " +
+            "> '" + modDir + "/module.prop'")))
+        val sed = "sed -E " +
+            "-e 's/^(key[[:space:]]+102[[:space:]]+)HOME/\\1F1/' " +
+            "-e 's/^(key[[:space:]]+227[[:space:]]+)STAR/\\1F2/' " +
+            "-e 's/^(key[[:space:]]+228[[:space:]]+)POUND/\\1F3/' " +
+            "-e 's/^(key[[:space:]]+231[[:space:]]+)CALL/\\1F4/' " +
+            "-e 's/^(key[[:space:]]+61[[:space:]]+)CALL/\\1F4/' " +
+            "'" + src + "' > '" + targetDir + "/mtk-kpd.kl'"
+        l.add(line("יצירת קובץ מיפוי מתוקן", sh(sed)))
+        val check = sh("grep -E '^key[[:space:]]+(102|227|228|231|61)[[:space:]]' '" + targetDir + "/mtk-kpd.kl'").out.trim()
+        if (check.isNotEmpty()) { l.add("השורות אחרי התיקון:"); l.addAll(check.lines().map { "  " + it }) }
+        l.add("✓ המודול נוצר. יש להפעיל מחדש את המכשיר כדי שהשינוי ייכנס לתוקף.")
+        return l
+    }
+
     fun removeFromSystem(pkg: String): List<String> {
         val l = ArrayList<String>()
         val pathsOut = sh("pm path " + pkg).out
@@ -309,8 +349,19 @@ object Root {
         if (check().first().startsWith("✗")) return listOf("✗ אין גישת רוט")
         try { c.packageManager.getApplicationInfo(pkg, 0) } catch (e: Exception) { return listOf("✗ " + pkg + " לא מותקנת") }
         val r = sh("cmd role add-role-holder android.app.role.DIALER " + pkg)
-        val h = sh("cmd role get-role-holders android.app.role.DIALER").out
-        return listOf(line("הגדרת אפליקציית טלפון", r), (if (h.contains(pkg)) "✓ " else "✗ ") + "בעל התפקיד כעת: " + h.take(80))
+        // Verify via the real TelecomManager API, not a second shell command: this device's OEM
+        // build doesn't implement "cmd role get-role-holders" at all ("Unknown command"), which
+        // made this always report failure even when add-role-holder actually succeeded.
+        val isCurrent = try {
+            val tm = c.getSystemService(Context.TELECOM_SERVICE) as android.telecom.TelecomManager
+            tm.defaultDialerPackage == pkg
+        } catch (t: Throwable) { null }
+        val status = when (isCurrent) {
+            true -> "✓ " + pkg + " הוא אפליקציית הטלפון הנוכחית"
+            false -> "✗ " + pkg + " עדיין לא אפליקציית הטלפון הנוכחית"
+            null -> if (r.code == 0) "✓ הפקודה הצליחה (קוד סיום 0)" else "✗ הפקודה נכשלה (קוד סיום " + r.code + ")"
+        }
+        return listOf(line("הגדרת אפליקציית טלפון", r), status)
     }
     fun setDialer(c: Context) = listOf(line("אפליקציית טלפון ברירת מחדל", sh("cmd role add-role-holder android.app.role.DIALER " + c.packageName)))
     fun setOwner(c: Context): List<String> {

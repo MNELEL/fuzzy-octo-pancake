@@ -2,6 +2,7 @@ package il.m5s.launcher
 
 import android.Manifest
 import android.app.Activity
+import android.app.KeyguardManager
 import android.os.SystemClock
 import android.view.WindowManager
 import android.view.MotionEvent
@@ -53,6 +54,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+private const val REQ_CONFIRM_CREDENTIAL = 50
 class MainActivity : Activity() {
     private class Item(
         val title: String, val icon: String = "", val tint: Int = 0xFFE0F2F1.toInt(),
@@ -526,6 +528,11 @@ class MainActivity : Activity() {
                 }
             },
             Item("תיקון התקנה תקועה (שם חבילה)", "🧩", 0xFFE8F5E9.toInt()) { askText("שם החבילה (למשל com.hb.dialer.free)", "") { p -> if (p.isNotBlank()) runRoot("תיקון " + p) { Root.fixPackage(this, p.trim()) } } },
+            Item("תיקון מיפוי מקשים (CALL/*/#/מקש מעל SEND קופצים לחייגן)", "⌨", 0xFFE8F5E9.toInt()) {
+                confirm("זה ישנה את מיפוי מקשי המכשיר ברמת המערכת (באמצעות מודול Magisk, בלי לגעת בחלוקה האמיתית), כדי שהלאנצ'ר יחליט בעצמו מה הם עושים במקום שאנדרואיד יקפוץ אוטומטית לחייגן. בתמורה: המקש הפיזי CALL והספרות */# עשויים לא לעבוד כצליל DTMF אמיתי בזמן שיחה פעילה. נדרשת הפעלה מחדש לאחר מכן. להמשיך?") {
+                    runRoot("תיקון מיפוי מקשים") { Root.fixKeylayout() }
+                }
+            },
             Item("הסרת אפליקציות", "🗑", 0xFFFFEBEE.toInt()) { open(Screen.UNINSTALL) },
             Item("פתיחת Device Security (התקנת Magisk)", "🛡", 0xFFFFF3E0.toInt()) { launchPkg("am.h10110000.roothider") },
             Item("הפעלת שירות הנגישות", "♿", 0xFFE3F2FD.toInt()) { runRoot("שירות הנגישות") { Root.enableAccessibility(this) } },
@@ -582,6 +589,7 @@ class MainActivity : Activity() {
         Item("כיבוי אוטומטי", "⏱", 0xFFE0F7FA.toInt(), timeoutLabel()) { cycleTimeout() },
         Item("חיסכון בסוללה", "🔋", 0xFFE8F5E9.toInt(), if (batterySaverOn()) "פעיל" else "כבוי") { batterySaverToggle() },
         Item("מסך נעילה של הלאנצ'ר (פתיחה: OK ואז *)", "🔒", 0xFFFFEBEE.toInt(), if (lockOn()) "פעיל" else "כבוי") { toggleLauncherLock() },
+        Item("דרישת קוד/תבנית אמיתיים של המכשיר בפתיחה", "🔑", 0xFFFFEBEE.toInt(), if (credUnlockOn()) "פעיל" else "כבוי") { toggleCredUnlock() },
         Item("רקע מסך הנעילה", "🖼", 0xFFFFEBEE.toInt(), if (Prefs.lockBg(this) < 0) "כמו מסך הבית" else bgNames[Prefs.lockBg(this).coerceIn(0, bgNames.size - 1)]) { open(Screen.LOCKBG) },
         Item("מסך הבית", "🖼", 0xFFE3F2FD.toInt(), bgNames[curBg().coerceIn(0, bgNames.size - 1)]) { open(Screen.HOMEBG) },
         Item("ערכת נושא", "🎨", 0xFFE3F2FD.toInt(), themes[Prefs.theme(this).coerceIn(0, themes.size - 1)].name) { open(Screen.THEMES) },
@@ -1060,6 +1068,7 @@ class MainActivity : Activity() {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQ_CONFIRM_CREDENTIAL) { if (resultCode == RESULT_OK) unlockNow() else toast("האימות בוטל, המסך נשאר נעול") }
         if (requestCode == 30 && resultCode == RESULT_OK && data?.data != null) importFrom(data.data!!)
         if (requestCode in 20..22 && resultCode == RESULT_OK && data != null) {
             val uri = data.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
@@ -1313,8 +1322,8 @@ class MainActivity : Activity() {
     }
 
     // shortcuts: OK and the four arrows on the home screen
-    private val scKeys = listOf("rb" to "מקש ימני במסך הבית", "ok" to "מקש OK", "up" to "חץ מעלה", "down" to "חץ מטה", "left" to "חץ שמאלה", "right" to "חץ ימינה")
-    private fun scDefault(k: String) = when (k) { "ok" -> "menu"; "up" -> "apps"; "left" -> "m:אנשי קשר"; "right" -> "m:יומן שיחות"; "rb" -> "m:יומן שיחות"; else -> "none" }
+    private val scKeys = listOf("rb" to "מקש ימני במסך הבית", "ok" to "מקש OK", "up" to "חץ מעלה", "down" to "חץ מטה", "left" to "חץ שמאלה", "right" to "חץ ימינה", "f1" to "מקש מעל SEND (אחרי תיקון מיפוי המקשים)")
+    private fun scDefault(k: String) = when (k) { "ok" -> "menu"; "up" -> "apps"; "left" -> "m:אנשי קשר"; "right" -> "m:יומן שיחות"; "rb" -> "m:יומן שיחות"; "f1" -> "menu"; else -> "none" }
     private fun scGet(k: String) = Prefs.custom(this, "sc:" + k, scDefault(k))
     private fun actionLabel(a: String): String = when {
         a == "none" || a.isEmpty() -> "ללא"
@@ -1915,11 +1924,31 @@ class MainActivity : Activity() {
         val on = !lockOn()
         Prefs.setCustom(this, "lockEnabled", if (on) "1" else "0")
         if (!on) Prefs.setCustom(this, "locked", "0")
-        Thread { try { Root.sh("cmd lock_settings set-disabled " + (if (on) "true" else "false")) } catch (t: Throwable) { } }.start()
+        // Deliberately does NOT touch "cmd lock_settings set-disabled" here. Android's own
+        // PIN/pattern/password (if set in Settings -> Security) stays active underneath as a
+        // real backstop if the launcher is ever bypassed; OK-then-* is just the fast day-to-day
+        // unlock since the launcher is shown first.
         toast(if (on) "מסך הנעילה פעיל: אחרי כיבוי מסך תופיע נעילה. פתיחה: OK ואז *" else "מסך הנעילה כבוי")
         applyLockState(); render()
     }
     private fun unlockNow() { Prefs.setCustom(this, "locked", "0"); lockOkAt = 0L; keepBright(false); dismissSystemKeyguard(); back() }
+    private fun credUnlockOn() = Prefs.custom(this, "credUnlock", "0") == "1"
+    private fun toggleCredUnlock() {
+        val on = !credUnlockOn()
+        Prefs.setCustom(this, "credUnlock", if (on) "1" else "0")
+        toast(if (on) "אחרי OK ואז * יוצג אימות קוד/תבנית אמיתי של המכשיר. ודאו שהגדרתם קוד/תבנית ב'הגדרות המכשיר ← אבטחה', אחרת אין למה לאמת."
+              else "אימות קוד/תבנית אמיתי כבוי, הפתיחה תחזור להיות מיידית")
+        render()
+    }
+    private fun confirmDeviceCredentialThenUnlock() {
+        if (!credUnlockOn()) { unlockNow(); return }
+        val km = getSystemService(Context.KEYGUARD_SERVICE) as? KeyguardManager
+        if (km == null || !km.isDeviceSecure) { unlockNow(); return }
+        val intent = km.createConfirmDeviceCredentialIntent("פתיחת המכשיר", "הזן את קוד/תבנית המכשיר כדי להמשיך")
+        if (intent == null) { unlockNow(); return }
+        try { startActivityForResult(intent, REQ_CONFIRM_CREDENTIAL) }
+        catch (t: Throwable) { unlockNow() }
+    }
     private fun lockKey(code: Int, down: Boolean): Boolean {
         if (code == KeyEvent.KEYCODE_VOLUME_UP || code == KeyEvent.KEYCODE_VOLUME_DOWN || code == KeyEvent.KEYCODE_POWER ||
             code == KeyEvent.KEYCODE_CALL || code == KeyEvent.KEYCODE_ENDCALL) return false
@@ -1929,7 +1958,7 @@ class MainActivity : Activity() {
             code == KeyEvent.KEYCODE_ENTER || code == KeyEvent.KEYCODE_DPAD_CENTER -> {
                 lockOkAt = now; render(); uiHandler.postDelayed({ if (screen == Screen.LOCK) render() }, 3100)
             }
-            code == KeyEvent.KEYCODE_STAR && lockOkAt != 0L && now - lockOkAt < 3000 -> unlockNow()
+            code == KeyEvent.KEYCODE_STAR && lockOkAt != 0L && now - lockOkAt < 3000 -> confirmDeviceCredentialThenUnlock()
             else -> { if (lockOkAt != 0L) { lockOkAt = 0L; render() } }
         }
         return true
@@ -2014,7 +2043,24 @@ class MainActivity : Activity() {
     override fun onBackPressed() { backAction() }
 
     // ---------- keys ----------
-    override fun dispatchKeyEvent(e: KeyEvent): Boolean {
+    /** On this device's remapped keylayout (see "תיקון מיפוי מקשים" in Root), the physical CALL
+     *  key and the physical * / # keys no longer report as Android's special CALL/STAR/POUND
+     *  codes -- those names make Android's own framework jump to the phone app before any app
+     *  (including us) ever sees the key. They now report as F2/F3/F4, which have no special
+     *  system meaning, and this turns them right back into STAR/POUND/CALL for every bit of
+     *  logic in this file below, unchanged. On a device WITHOUT the remap applied, F2/F3/F4
+     *  simply never fire, so this is harmless either way. */
+    private fun remapKeyEvent(src: KeyEvent): KeyEvent {
+        val newCode = when (src.keyCode) {
+            KeyEvent.KEYCODE_F2 -> KeyEvent.KEYCODE_STAR
+            KeyEvent.KEYCODE_F3 -> KeyEvent.KEYCODE_POUND
+            KeyEvent.KEYCODE_F4 -> KeyEvent.KEYCODE_CALL
+            else -> return src
+        }
+        return KeyEvent(src.downTime, src.eventTime, src.action, newCode, src.repeatCount, src.metaState, src.deviceId, src.scanCode, src.flags, src.source)
+    }
+    override fun dispatchKeyEvent(rawE: KeyEvent): Boolean {
+        val e = remapKeyEvent(rawE)
         try {
             keyedAt = SystemClock.uptimeMillis()
             if (learnAction != null) { if (e.action == KeyEvent.ACTION_DOWN && e.repeatCount == 0) learnKey(e.keyCode); return true }
@@ -2052,6 +2098,7 @@ class MainActivity : Activity() {
                 KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> "ok"
                 KeyEvent.KEYCODE_DPAD_UP -> "up"; KeyEvent.KEYCODE_DPAD_DOWN -> "down"
                 KeyEvent.KEYCODE_DPAD_LEFT -> "left"; KeyEvent.KEYCODE_DPAD_RIGHT -> "right"
+                KeyEvent.KEYCODE_F1 -> "f1"
                 else -> null
             }
             if (sc != null) { if (down) runAction(scGet(sc)); return true }
