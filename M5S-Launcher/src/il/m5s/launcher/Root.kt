@@ -201,31 +201,32 @@ object Root {
         return l
     }
 
-    /** Finds this device's real keypad keylayout file and overlays (via a systemless Magisk
-     *  module, same pattern as removeFromSystem -- never touches the real /system partition) a
-     *  patched copy where the physical CALL key and the physical * / # keys no longer report as
-     *  Android's special CALL/STAR/POUND codes. Those specific names make Android's own
-     *  framework intercept the key before any app ever sees it (CALL always jumps to the phone
-     *  app; on this ROM, STAR/POUND do too). They become F2/F3/F4 instead, which the launcher
-     *  (M5Keyboard and MainActivity) understands as STAR/POUND/CALL again for everything it does
-     *  -- but that interception by Android itself is what stops. The key above SEND, mapped to
-     *  HOME (also specially intercepted, which is why it never reached any app), becomes F1, a
-     *  free, assignable launcher shortcut. Reads the file fresh off the device and only edits
-     *  those five lines with sed, rather than writing a hardcoded replacement, so it adapts to
-     *  whatever this file actually contains instead of risking dropping something unrelated in
-     *  it. Needs a reboot to take effect, same as any Magisk module. */
+    /** Finds this device's real keypad keylayout file and, at every boot, bind-mounts a patched
+     *  copy directly over it via a Magisk post-fs-data.sh script -- a plain kernel bind-mount
+     *  rather than relying on Magisk's automatic systemless file-overlay detection. The first
+     *  version of this (see fixKeylayoutLegacy below) used the normal "drop files under
+     *  <module>/system/..." convention that removeFromSystem also uses, which works fine for
+     *  whole directories but turned out NOT to actually mount for this single file: module.prop
+     *  was present, Magisk was running, nothing was disabled, yet "mount | grep keylayout" came
+     *  back completely empty after a reboot -- Magisk silently skipped it, most likely an
+     *  SELinux-context mismatch specific to this path that the automatic overlay path is
+     *  sensitive to. An explicit bind-mount run as a boot script sidesteps that: it's the same
+     *  kernel call the system itself would use, is far more commonly recommended for overriding
+     *  one specific file, and doesn't depend on Magisk's file-matching heuristics at all.
+     *  Patches the live file's content with sed (not a hardcoded replacement) so it adapts to
+     *  whatever this file actually contains. See fixKeylayout (the wrapper used by the UI) for
+     *  what the remap itself does and why. Needs a reboot to take effect. */
     fun fixKeylayout(): List<String> {
         val l = ArrayList<String>()
         val candidates = listOf("/system/usr/keylayout/mtk-kpd.kl", "/vendor/usr/keylayout/mtk-kpd.kl")
         val src = candidates.firstOrNull { sh("test -f '" + it + "' && echo yes").out.contains("yes") }
         if (src == null) { l.add("✗ קובץ מיפוי המקשים (mtk-kpd.kl) לא נמצא בנתיבים הצפויים"); return l }
-        val root = if (src.startsWith("/vendor/")) "vendor" else "system"
         val modDir = "/data/adb/modules/m5s_keylayout_fix"
-        val targetDir = modDir + "/" + root + "/usr/keylayout"
-        l.add(line("יצירת תיקיית מודול Magisk", sh("mkdir -p '" + targetDir + "'")))
+        l.add(line("ניקוי ניסיון קודם (אם יש)", sh("rm -rf '" + modDir + "'")))
+        l.add(line("יצירת תיקיית מודול Magisk", sh("mkdir -p '" + modDir + "'")))
         l.add(line("כתיבת module.prop", sh(
-            "printf 'id=m5s_keylayout_fix\nname=M5S Keylayout Fix\nversion=v1\nversionCode=1\nauthor=m5s-launcher\n" +
-            "description=Remaps CALL/STAR/POUND/HOME to neutral keycodes so the launcher decides what they do, instead of Android jumping to the dialer\n' " +
+            "printf 'id=m5s_keylayout_fix\nname=M5S Keylayout Fix\nversion=v2\nversionCode=2\nauthor=m5s-launcher\n" +
+            "description=Bind-mounts a remapped CALL/STAR/POUND/HOME keylayout at boot so the launcher decides what those keys do, instead of Android jumping to the dialer\n' " +
             "> '" + modDir + "/module.prop'")))
         val sed = "sed -E " +
             "-e 's/^(key[[:space:]]+102[[:space:]]+)HOME/\\1F1/' " +
@@ -233,11 +234,21 @@ object Root {
             "-e 's/^(key[[:space:]]+228[[:space:]]+)POUND/\\1F3/' " +
             "-e 's/^(key[[:space:]]+231[[:space:]]+)CALL/\\1F4/' " +
             "-e 's/^(key[[:space:]]+61[[:space:]]+)CALL/\\1F4/' " +
-            "'" + src + "' > '" + targetDir + "/mtk-kpd.kl'"
+            "'" + src + "' > '" + modDir + "/mtk-kpd-patched.kl'"
         l.add(line("יצירת קובץ מיפוי מתוקן", sh(sed)))
-        val check = sh("grep -E '^key[[:space:]]+(102|227|228|231|61)[[:space:]]' '" + targetDir + "/mtk-kpd.kl'").out.trim()
+        val check = sh("grep -E '^key[[:space:]]+(102|227|228|231|61)[[:space:]]' '" + modDir + "/mtk-kpd-patched.kl'").out.trim()
         if (check.isNotEmpty()) { l.add("השורות אחרי התיקון:"); l.addAll(check.lines().map { "  " + it }) }
-        l.add("✓ המודול נוצר. יש להפעיל מחדש את המכשיר כדי שהשינוי ייכנס לתוקף.")
+        // Built with double quotes around $MODDIR and the target path (not single quotes),
+        // so this script text itself contains no single quotes -- it can then be safely
+        // wrapped in single quotes as printf's argument below without any nesting collision.
+        val script = "#!/system/bin/sh\n" + "MODDIR=\${0%/*}\n" + "mount --bind \"\$MODDIR/mtk-kpd-patched.kl\" \"" + src + "\"\n"
+        // printf '%s' '<content>' rather than printf '<content>': the script text contains a
+        // literal % (in ${0%/*}) which printf would otherwise try to parse as a conversion
+        // specifier if it were part of the format string itself instead of a %s argument.
+        l.add(line("כתיבת סקריפט ההרכבה (post-fs-data.sh)", sh("printf '%s' '" + script + "' > '" + modDir + "/post-fs-data.sh'")))
+        l.add(line("הענקת הרשאת הרצה לסקריפט", sh("chmod 755 '" + modDir + "/post-fs-data.sh'")))
+        l.add("✓ המודול נוצר (גרסה חדשה, מבוססת bind-mount). יש להפעיל מחדש את המכשיר כדי שהשינוי ייכנס לתוקף.")
+        l.add("לאחר ההפעלה מחדש אפשר לוודא עם: mount | grep keylayout — אמורה להופיע שורה.")
         return l
     }
 
